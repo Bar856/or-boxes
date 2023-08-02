@@ -8,7 +8,7 @@ export default function Station({ st }) {
       </div>
       <div className='grid grid-rows-5 gap-4 p-10'>
         <label className='center'>{st.id}</label>
-        <input className='text-center border-solid border-2 border-stone-400 rounded-lg w-full px-2' placeholder='Setup Name' type='text' />
+        <input className='text-center border-solid border-2 border-stone-400 rounded-lg w-full px-2' placeholder='Setup Name' type='text'  />
         <input className='text-center border-solid border-2 border-stone-400 rounded-lg w-full px-2' placeholder='Owner' type='text' />
         <input className='text-center border-solid border-2 border-stone-400 rounded-lg w-full px-2' placeholder='IP' type='text' />
         <input className='text-center border-solid border-2 border-stone-400 rounded-lg w-full px-2' placeholder='Location' type='text' />
