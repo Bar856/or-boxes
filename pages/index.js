@@ -1,6 +1,6 @@
 import Station from './Station.js';
 import Head from 'next/head';
-import { useDataRefresh } from './useDataRefresh.js';
+import { useDataRefresh } from '../helpers/useDataRefresh.js';
 import { useEffect, useState } from 'react';
 import Image from 'next/image.js';
 export default function Home({ initialStations }) {

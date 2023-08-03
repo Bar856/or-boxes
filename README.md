@@ -8,5 +8,9 @@ npm install
 ```
 ## starting the server
 ```
-npm run dev
+npm run build 
+```
+-> after
+```
+npm run start
 ```
