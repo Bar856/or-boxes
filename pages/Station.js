@@ -76,41 +76,41 @@ export default function StationComp({ station, setStations }) {
       <div className=' grid-rows-5 gap-4 p-2'>
         <label className='center'>Setup {id}</label>
         <input
-          className='hover:bg-slate-300 text-center border-solid border-2 border-stone-400 rounded-lg w-full px-2'
+          className='hover:bg-slate-300 text-center border-solid border-2 border-stone-400 rounded-lg w-full mb-2'
           placeholder='Setup Name'
           type='text'
           value={setupName}
           onChange={(e) => setSetupName(e.target.value)}
         />
         <input
-          className='hover:bg-slate-300 text-center border-solid border-2 border-stone-400 rounded-lg w-full px-2'
+          className='hover:bg-slate-300 text-center border-solid border-2 border-stone-400 rounded-lg w-full mb-2'
           placeholder='Owner'
           type='text'
           value={setupOwner}
           onChange={(e) => setSetupOwner(e.target.value)}
         />
         <input
-          className='hover:bg-slate-300 text-center border-solid border-2 border-stone-400 rounded-lg w-full px-2'
+          className='hover:bg-slate-300 text-center border-solid border-2 border-stone-400 rounded-lg w-full mb-2'
           placeholder='IP'
           type='text'
           value={setupIp}
           onChange={(e) => setSetupIp(e.target.value)}
         />
         <input
-          className='hover:bg-slate-300 text-center border-solid border-2 border-stone-400 rounded-lg w-full px-2'
+          className='hover:bg-slate-300 text-center border-solid border-2 border-stone-400 rounded-lg w-full mb-2'
           placeholder='Location'
           type='text'
           value={setupLocation}
           onChange={(e) => setSetupLocation(e.target.value)}
         />
         <input
-            className='cursor-pointer hover:bg-slate-100 border-solid border-2 text-center border-stone-400 rounded-lg w-full px-2'
+            className='cursor-pointer hover:bg-slate-100 border-solid border-2 text-center border-stone-400 rounded-lg w-full mb-2'
             type='Submit'
             defaultValue='Clear Owner'
             onClick={clearFields}
           />
         <input
-          className='cursor-pointer hover:bg-slate-300 border-solid border-2 text-center border-stone-400 rounded-lg w-full px-2'
+          className='cursor-pointer hover:bg-slate-300 border-solid border-2 text-center border-stone-400 rounded-lg w-full mb-2'
           type='Submit'
           defaultValue='Update'
           onClick={handleUpdate}
