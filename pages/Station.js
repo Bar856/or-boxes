@@ -49,7 +49,7 @@ export default function StationComp({ station, setStations }) {
       <div className='center'>
         <Image className='rounded-lg' width={200} height={200} src={"/box.png"} alt='box' />
       </div>
-      <div className='grid grid-rows-5 gap-4 p-10'>
+      <div className=' grid-rows-5 gap-4 p-2'>
         <label className='center'>Setup {id}</label>
         <input
           className='hover:bg-slate-300 text-center border-solid border-2 border-stone-400 rounded-lg w-full px-2'

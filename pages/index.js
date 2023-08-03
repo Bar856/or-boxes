@@ -89,7 +89,7 @@ export default function Home({ initialStations }) {
             <span className='text-red-500 l'> {nonEmptyCellCount} </span>/ <span>{totalCellCount}</span>
           </div>
       </div>
-      <div className="grid grid-cols-4 gap-4 ">
+      <div className="grid grid-cols-8 gap-4 ">
         {orderedStations.map((station, index) => (
           <Station
           className={index < orderedStations.findIndex((s) => s.id === station.id) ? 'moved-up' : ''}
