@@ -48,7 +48,7 @@ export default function StationComp({ station, setStations }) {
   };
   
   return (
-    <div style={owner.length ? { backgroundColor: '#ff9999' } : { backgroundColor: '#80ff80' }} className='border-solid border-2 border-stone-400 rounded-lg'>
+    <div style={owner.length ? { backgroundColor: '#ff9999' } : { backgroundColor: '#80ff80' }} className='station move-station border-solid border-2 border-stone-400 rounded-lg'>
       <div className='center'>
         <Image className='rounded-lg' width={200} height={200} src={"/box.png"} alt='box' />
       </div>

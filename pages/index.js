@@ -100,8 +100,10 @@ export default function Home({ initialStations }) {
           </div>
       </div>
       <div className="grid grid-cols-4 gap-4 ">
-        {orderedStations.map((station) => (
-          <Station key={station.id} station={station} setStations={setStations} />
+        {orderedStations.map((station, index) => (
+          <Station
+          className={index < orderedStations.findIndex((s) => s.id === station.id) ? 'moved-up' : ''}
+           key={station.id} station={station} setStations={setStations} />
         ))}
       </div>
     </main>
