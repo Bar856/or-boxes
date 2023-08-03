@@ -1,3 +1,12 @@
 # RF Integrations-Lab Mapping
-# idea By Or 
-# written By Bar
+idea By Or 
+written By Bar
+## installation
+for installation run 
+```
+npm install
+```
+## starting the server
+```
+npm run dev
+```
