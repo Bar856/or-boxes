@@ -66,7 +66,7 @@ export default function Home({ initialStations }) {
 
  if (loading) {
   return <main className="flex min-h-screen flex-col items-center justify-between p-24  ">
-          <Image src="/Spinner.gif" className='mt-48' width={200} height={200} />
+          <Image alt='Loading Gif' src="/Spinner.gif" className='mt-48' width={200} height={200} />
         </main>
 }
   return (
