@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import { useState } from 'react';
 
-export default function stationCom({ station, setStations }) {
-  const { id, name, owner, ip, location } = station;
+export default function StationComp({ station, setStations }) {
+  const { id = '', name = '', owner = '', ip = '', location = '' } = station || {};
 
   const [setupName, setSetupName] = useState(name);
   const [setupOwner, setSetupOwner] = useState(owner);
