@@ -26,7 +26,6 @@ export default function StationComp({ station, setStations }) {
       location: setupLocation,
     };
     
-    // Send the updated data to the API
     fetch('/api/updateStation', {
       method: 'POST',
       headers: {
