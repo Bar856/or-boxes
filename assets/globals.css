@@ -21,17 +21,16 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
-/* styles/globals.css */
 
 @keyframes moveStation {
   0% {
     transform: translateY(0);
   }
   100% {
-    transform: translateY(10px); /* Change this value to adjust the distance of the movement */
+    transform: translateY(10px);
   }
 }
 
 .move-station {
-  animation: moveStation 1s ease-in-out; /* Change the duration and timing function as needed */
+  animation: moveStation 1s ease-in-out; 
 }

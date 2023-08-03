@@ -36,8 +36,6 @@ export default function StationComp({ station, setStations }) {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data.message); // You can handle the success message here if needed
-        // Update the local state in the Station component
         setStations((prevStations) =>
           prevStations.map((s) => (s.id === updatedStation.id ? updatedStation : s))
         );

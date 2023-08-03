@@ -5,8 +5,8 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image.js';
 export default function Home({ initialStations }) {
   const [stations, setStations] = useState(initialStations);
-  const [orderBy, setOrderBy] = useState('id'); // Default order by ID
-  const [loading, setLoading] = useState(true); // State to track if data is being fetched
+  const [orderBy, setOrderBy] = useState('id'); 
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchData();
@@ -18,7 +18,7 @@ export default function Home({ initialStations }) {
       .then((response) => response.json())
       .then((data) => {
         setStations(data);
-        setLoading(false); // Set loading to false once data is fetched
+        setLoading(false); 
       })
       .catch((error) => {
         console.error('Error fetching data:', error);
@@ -33,24 +33,18 @@ export default function Home({ initialStations }) {
   const orderedStations = stations
   .slice()
   .sort((a, b) => {
-    // First, check if the owner field is empty for both stations
     const bothEmpty = !a.owner.trim() && !b.owner.trim();
     if (bothEmpty) {
-      // If both owner fields are empty, keep the original order
       return 0;
     } else if (!a.owner.trim()) {
-      // If only the owner field of station 'a' is empty, place 'a' after 'b'
       return 1;
     } else if (!b.owner.trim()) {
-      // If only the owner field of station 'b' is empty, place 'a' before 'b'
       return -1;
     } else {
-      // If both owner fields are non-empty, sort alphabetically by owner name
       return a.owner.localeCompare(b.owner);
     }
   })
   .sort((a, b) => {
-    // Sort by ID if orderBy is set to 'id'
     if (orderBy === 'id') {
       return parseInt(a.id) - parseInt(b.id);
     }
@@ -59,17 +53,14 @@ export default function Home({ initialStations }) {
   
   useDataRefresh(fetchData);
 
-  // Function to calculate the number of non-empty cells
   const getNonEmptyCellCount = () => {
     const nonEmptyCells = stations.filter((station) => station.owner.trim() !== '');
     return nonEmptyCells.length;
   };
 
-  // Function to get the total number of cells
   const getTotalCellCount = () => {
     return stations.length;
   };
-  // Calculate the number of non-empty cells and total cells
   const nonEmptyCellCount = getNonEmptyCellCount();
   const totalCellCount = getTotalCellCount();
 
@@ -86,7 +77,6 @@ export default function Home({ initialStations }) {
           name="description"
           content="This is a Next.js app for managing RF Integrations-Lab Mapping."
         />
-        {/* Add other meta tags as needed */}
       </Head>
       <div className='grid grid-cols-6'>
           <h1 className='col-start-3 col-span-5 text-2xl p-4'>RF Integrations-Lab Mapping</h1>
@@ -112,7 +102,6 @@ export default function Home({ initialStations }) {
 
 export async function getServerSideProps() {
   try {
-    // Fetch the initial data from the server-side endpoint to populate the page
     const response = await fetch('/api/stations');
     if (!response.ok) {
       throw new Error('Failed to fetch data from the server');

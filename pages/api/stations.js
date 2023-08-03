@@ -22,7 +22,6 @@ export default async function handler(req, res) {
         });
     });
 
-    // Set response headers and send JSON data
     return res.status(200).json(csvData);
   } catch (error) {
     console.error('Error parsing CSV:', error);
