@@ -9,9 +9,13 @@ export default function handler(req, res) {
     // Read the CSV file and update the data
     const filePath = path.join(process.cwd(), 'stations.csv');
     const updatedData = [];
+    let headers = []; // Store the headers when they are first encountered
 
     fs.createReadStream(filePath)
       .pipe(csv.parse({ headers: true }))
+      .on('headers', (headerList) => {
+        headers = headerList; // Store the headers
+      })
       .on('data', (row) => {
         if (row.id === id) {
           row.name = name;
@@ -25,7 +29,7 @@ export default function handler(req, res) {
         // Write the updated data back to the CSV file
         fs.writeFileSync(filePath, '');
         fs.createWriteStream(filePath, { flags: 'a' })
-          .write(Object.keys(updatedData[0]).join(',') + '\n');
+          .write(headers.join(',') + '\n'); // Write the headers first
         updatedData.forEach((row) =>
           fs.createWriteStream(filePath, { flags: 'a' }).write(Object.values(row).join(',') + '\n')
         );

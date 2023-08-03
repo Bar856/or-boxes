@@ -15,7 +15,7 @@ export default function handler(req, res) {
       })
       .on('end', () => {
         // Set response headers and send JSON data
-        res.setHeader('Content-Type', 'application/json');
+        // res.setHeader('Content-Type', 'application/json');
         res.status(200).json(csvData);
       })
       .on('error', (error) => {
