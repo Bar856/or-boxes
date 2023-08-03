@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function StationComp({ station, setStations }) {
   const { id = '', name = '', owner = '', ip = '', location = '' } = station || {};
@@ -11,7 +11,12 @@ export default function StationComp({ station, setStations }) {
   const clearFields = () => {
     setSetupOwner("");
   };
-  
+  useEffect(() => {
+    setSetupName(station.name);
+    setSetupOwner(station.owner);
+    setSetupIp(station.ip);
+    setSetupLocation(station.location);
+  }, [station]);
   const handleUpdate = () => {
     const updatedStation = {
       ...station,
@@ -42,7 +47,6 @@ export default function StationComp({ station, setStations }) {
       });
   };
   
-
   return (
     <div style={owner.length ? { backgroundColor: '#ff9999' } : { backgroundColor: '#80ff80' }} className='border-solid border-2 border-stone-400 rounded-lg'>
       <div className='center'>

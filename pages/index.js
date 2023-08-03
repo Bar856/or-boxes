@@ -8,19 +8,12 @@ export default function Home({ initialStations }) {
   const [orderBy, setOrderBy] = useState('id'); // Default order by ID
   const [loading, setLoading] = useState(true); // State to track if data is being fetched
 
-  const RefreshInterval = 1000; // Refresh interval in milliseconds (10 seconds)
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-
-  // useEffect(() => {
-  //   // Fetch data from the server-side endpoint
-  //   fetch('/api/stations')
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       setStations(data);
-  //       setLoading(false); // Set loading to false once data is fetched
-  //     });
-  // }, []);
   const fetchData = () => {
+    setLoading(true)
     fetch('/api/stations')
       .then((response) => response.json())
       .then((data) => {

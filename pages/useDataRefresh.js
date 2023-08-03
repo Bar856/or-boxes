@@ -1,10 +1,12 @@
 import { useEffect } from 'react';
 
-const RefreshInterval = 5000; // Refresh interval in milliseconds (10 seconds)
-
 export function useDataRefresh(callback) {
+  const RefreshInterval = 20000; // Refresh interval in milliseconds (10 seconds)
+
   useEffect(() => {
-    const interval = setInterval(callback, RefreshInterval);
+    const interval = setInterval(() => {
+      callback();
+    }, RefreshInterval);
 
     return () => clearInterval(interval);
   }, [callback]);

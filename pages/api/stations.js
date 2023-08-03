@@ -2,28 +2,30 @@ const fs = require('fs');
 const path = require('path');
 const csv = require('fast-csv');
 
-const filePath = path.join(process.cwd(), 'stations.csv');
-export default function handler(req, res) {
 
+const filePath = path.join(process.cwd(), 'stations.csv');
+
+export default async function handler(req, res) {
   try {
-    const csvData = [];
-    
-    fs.createReadStream(filePath)
-      .pipe(csv.parse({ headers: true }))
-      .on('data', (row) => {
-        csvData.push(row);
-      })
-      .on('end', () => {
-        // Set response headers and send JSON data
-        // res.setHeader('Content-Type', 'application/json');
-        res.status(200).json(csvData);
-      })
-      .on('error', (error) => {
-        console.error('Error parsing CSV:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
-      });
+    const csvData = await new Promise((resolve, reject) => {
+      const data = [];
+      fs.createReadStream(filePath)
+        .pipe(csv.parse({ headers: true }))
+        .on('data', (row) => {
+          data.push(row);
+        })
+        .on('end', () => {
+          resolve(data);
+        })
+        .on('error', (error) => {
+          reject(error);
+        });
+    });
+
+    // Set response headers and send JSON data
+    return res.status(200).json(csvData);
   } catch (error) {
-    console.error('Error reading CSV file:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    console.error('Error parsing CSV:', error);
+    return res.status(500).json({ error: 'Internal Server Error' });
   }
 }
