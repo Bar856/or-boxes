@@ -9,7 +9,31 @@ export default function StationComp({ station, setStations }) {
   const [setupIp, setSetupIp] = useState(ip);
   const [setupLocation, setSetupLocation] = useState(location);
   const clearFields = () => {
-    setSetupOwner("");
+    const updatedStation = {
+      ...station,
+      name: setupName,
+      owner: "",
+      ip: setupIp,
+      location: setupLocation,
+    };
+    
+    fetch('/api/updateStation', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updatedStation),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setStations((prevStations) =>
+          prevStations.map((s) => (s.id === updatedStation.id ? updatedStation : s))
+        );
+      })
+      .catch((error) => {
+        alert('Error updating data:', error);
+      });
+    
   };
   useEffect(() => {
     setSetupName(station.name);

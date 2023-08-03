@@ -79,7 +79,7 @@ export default function Home({ initialStations }) {
         />
       </Head>
       <div className='grid grid-cols-6'>
-          <h1 className='col-start-3 col-span-5 text-2xl p-4'>RF Integrations-Lab Mapping</h1>
+          <h1 className='col-start-3 col-span-5 text-2xl p-2'>RF Integrations-Lab Mapping</h1>
           <select className='m-4 col-start-3 col-end-4 ' value={orderBy} onChange={handleOrderChange}>
             <option  value="id">Order by ID</option>
             <option value="owner">Busy Stations first</option>
