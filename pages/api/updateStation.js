@@ -8,38 +8,43 @@ export default function handler(req, res) {
 
     // Read the CSV file and update the data
     const filePath = path.join(process.cwd(), 'stations.csv');
-    const updatedData = [];
-    let headers = []; // Store the headers when they are first encountered
 
-    fs.createReadStream(filePath)
-      .pipe(csv.parse({ headers: true }))
-      .on('headers', (headerList) => {
-        headers = headerList; // Store the headers
-      })
-      .on('data', (row) => {
-        if (row.id === id) {
-          row.name = name;
-          row.owner = owner;
-          row.ip = ip;
-          row.location = location;
-        }
-        updatedData.push(row);
-      })
-      .on('end', () => {
-        // Write the updated data back to the CSV file
-        fs.writeFileSync(filePath, '');
-        fs.createWriteStream(filePath, { flags: 'a' })
-          .write(headers.join(',') + '\n'); // Write the headers first
-        updatedData.forEach((row) =>
-          fs.createWriteStream(filePath, { flags: 'a' }).write(Object.values(row).join(',') + '\n')
-        );
+    // Read the entire CSV file into memory and perform updates
+    fs.readFile(filePath, 'utf-8', (err, data) => {
+      if (err) {
+        console.error('Error reading CSV file:', err);
+        return res.status(500).json({ error: 'Internal Server Error' });
+      }
 
-        res.status(200).json({ message: 'Data updated successfully!' });
-      })
-      .on('error', (error) => {
-        console.error('Error updating CSV:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
+      const lines = data.trim().split('\n');
+      const headers = lines[0].split(',');
+
+      // Find the index of the station with the provided ID
+      const stationIndex = lines.findIndex((line) => {
+        const columns = line.split(',');
+        return columns[0] === id;
       });
+
+      if (stationIndex === -1) {
+        return res.status(404).json({ error: 'Station not found' });
+      }
+
+      // Update the data for the station
+      lines[stationIndex] = [id, name, owner, ip, location].join(',');
+
+      // Join all lines back into a single CSV string
+      const updatedData = lines.join('\n');
+
+      // Write the updated data back to the CSV file
+      fs.writeFile(filePath, updatedData, 'utf-8', (err) => {
+        if (err) {
+          console.error('Error updating CSV file:', err);
+          return res.status(500).json({ error: 'Internal Server Error' });
+        }
+
+        return res.status(200).json({ message: 'Data updated successfully!' });
+      });
+    });
   } else {
     res.status(405).json({ error: 'Method not allowed' });
   }

@@ -9,44 +9,39 @@ export default function StationComp({ station, setStations }) {
   const [setupIp, setSetupIp] = useState(ip);
   const [setupLocation, setSetupLocation] = useState(location);
   const clearFields = () => {
-    setSetupIp("");
-    setSetupLocation("");
     setSetupOwner("");
-    setSetupName("");
   };
   
   const handleUpdate = () => {
-    if (setupName != name || setupOwner != owner || setupIp != ip || setupLocation != location){
-      const updatedStation = {
-        ...station,
-        name: setupName,
-        owner: setupOwner,
-        ip: setupIp,
-        location: setupLocation,
-      };
-      // Send the updated data to the API
-      fetch('/api/updateStation', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(updatedStation),
+    const updatedStation = {
+      ...station,
+      name: setupName,
+      owner: setupOwner,
+      ip: setupIp,
+      location: setupLocation,
+    };
+    
+    // Send the updated data to the API
+    fetch('/api/updateStation', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updatedStation),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data.message); // You can handle the success message here if needed
+        // Update the local state in the Station component
+        setStations((prevStations) =>
+          prevStations.map((s) => (s.id === updatedStation.id ? updatedStation : s))
+        );
       })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log(data.message); // You can handle the success message here if needed
-          // Update the local state in the Station component
-          setStations((prevStations) =>
-            prevStations.map((s) => (s.id === updatedStation.id ? updatedStation : s))
-          );
-        })
-        .catch((error) => {
-          console.error('Error updating data:', error);
-        });
-    }else{
-      alert("nothing changed")
-    }
+      .catch((error) => {
+        console.error('Error updating data:', error);
+      });
   };
+  
 
   return (
     <div style={owner.length ? { backgroundColor: '#ff9999' } : { backgroundColor: '#80ff80' }} className='border-solid border-2 border-stone-400 rounded-lg'>
@@ -86,7 +81,7 @@ export default function StationComp({ station, setStations }) {
         <input
             className='cursor-pointer hover:bg-slate-100 border-solid border-2 text-center border-stone-400 rounded-lg w-full px-2'
             type='Submit'
-            defaultValue='Clear'
+            defaultValue='Clear Owner'
             onClick={clearFields}
           />
         <input

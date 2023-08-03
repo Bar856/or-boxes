@@ -1,22 +1,38 @@
 import Station from './Station.js';
 import Head from 'next/head';
-
+import { useDataRefresh } from './useDataRefresh.js';
 import { useEffect, useState } from 'react';
+import Image from 'next/image.js';
 export default function Home({ initialStations }) {
   const [stations, setStations] = useState(initialStations);
   const [orderBy, setOrderBy] = useState('id'); // Default order by ID
   const [loading, setLoading] = useState(true); // State to track if data is being fetched
 
-  useEffect(() => {
-    // Fetch data from the server-side endpoint
+  const RefreshInterval = 1000; // Refresh interval in milliseconds (10 seconds)
+
+
+  // useEffect(() => {
+  //   // Fetch data from the server-side endpoint
+  //   fetch('/api/stations')
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       setStations(data);
+  //       setLoading(false); // Set loading to false once data is fetched
+  //     });
+  // }, []);
+  const fetchData = () => {
     fetch('/api/stations')
       .then((response) => response.json())
       .then((data) => {
         setStations(data);
         setLoading(false); // Set loading to false once data is fetched
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
       });
-  }, []);
-  
+  };
+  useDataRefresh(fetchData);
+
   const handleOrderChange = (event) => {
     setOrderBy(event.target.value);
   };
@@ -48,6 +64,7 @@ export default function Home({ initialStations }) {
     return 0;
   });
   
+  useDataRefresh(fetchData);
 
   // Function to calculate the number of non-empty cells
   const getNonEmptyCellCount = () => {
@@ -65,7 +82,7 @@ export default function Home({ initialStations }) {
 
  if (loading) {
   return <main className="flex min-h-screen flex-col items-center justify-between p-24  ">
-          <h1 className='col-start-3 col-span-5 text-2xl p-4'>Loading</h1>
+          <Image src="/Spinner.gif" className='mt-48' width={200} height={200} />
         </main>
 }
   return (
