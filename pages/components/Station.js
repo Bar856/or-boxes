@@ -107,7 +107,7 @@ export default function StationComp({ station, setStations }) {
           type='text'
           value={setupOwner}
           onChange={(e) => setSetupOwner(e.target.value)}
-        />
+        />  
         <input
             className='cursor-pointer hover:bg-slate-100 border-solid border-2 text-center border-stone-400 rounded-lg w-full mb-2'
             type='button'
