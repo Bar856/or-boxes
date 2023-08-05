@@ -73,8 +73,12 @@ export default function StationComp({ station, setStations }) {
       <div className='center'>
         <Image className='rounded-lg' width={200} height={200} src={"/box.png"} alt='box' />
       </div>
-      <div className=' grid-rows-5 gap-4 p-2'>
-        <label className='center'>Setup {id}</label>
+      <form className=' grid-rows-5 gap-4 p-2'
+      onSubmit={(e) => {
+        e.preventDefault(); // Prevent the default form submission
+        handleUpdate();
+      }}
+    >
         <input
           className='hover:bg-slate-300 text-center border-solid border-2 border-stone-400 rounded-lg w-full mb-2'
           placeholder='Setup Name'
@@ -82,13 +86,7 @@ export default function StationComp({ station, setStations }) {
           value={setupName}
           onChange={(e) => setSetupName(e.target.value)}
         />
-        <input
-          className='hover:bg-slate-300 text-center border-solid border-2 border-stone-400 rounded-lg w-full mb-2'
-          placeholder='Owner'
-          type='text'
-          value={setupOwner}
-          onChange={(e) => setSetupOwner(e.target.value)}
-        />
+        
         <input
           className='hover:bg-slate-300 text-center border-solid border-2 border-stone-400 rounded-lg w-full mb-2'
           placeholder='IP'
@@ -104,18 +102,26 @@ export default function StationComp({ station, setStations }) {
           onChange={(e) => setSetupLocation(e.target.value)}
         />
         <input
+          className='hover:bg-slate-300 text-center border-solid border-2 border-stone-400 rounded-lg w-full mb-2'
+          placeholder='Owner'
+          type='text'
+          value={setupOwner}
+          onChange={(e) => setSetupOwner(e.target.value)}
+        />
+        <input
             className='cursor-pointer hover:bg-slate-100 border-solid border-2 text-center border-stone-400 rounded-lg w-full mb-2'
-            type='Submit'
+            type='button'
             defaultValue='Clear Owner'
             onClick={clearFields}
           />
         <input
+          hidden={true}
           className='cursor-pointer hover:bg-slate-300 border-solid border-2 text-center border-stone-400 rounded-lg w-full mb-2'
-          type='Submit'
+          type='submit'
           defaultValue='Update'
           onClick={handleUpdate}
         />
-      </div>
+      </form>
     </div>
   );
 }

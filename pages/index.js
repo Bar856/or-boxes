@@ -1,4 +1,4 @@
-import Station from './Station.js';
+import Station from './components/Station.js';
 import Head from 'next/head';
 import { useDataRefresh } from '../helpers/useDataRefresh.js';
 import { useEffect, useState } from 'react';
@@ -70,7 +70,7 @@ export default function Home({ initialStations }) {
         </main>
 }
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24  ">
+    <main className="flex min-h-screen flex-col items-center justify-between p-12  ">
       <Head>
         <title>RF Integrations-Lab Mapping</title>
         <meta
