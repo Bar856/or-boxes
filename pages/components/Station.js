@@ -41,6 +41,7 @@ export default function StationComp({ station, setStations }) {
     setSetupIp(station.ip);
     setSetupLocation(station.location);
   }, [station]);
+
   const handleUpdate = () => {
     const updatedStation = {
       ...station,
@@ -119,7 +120,6 @@ export default function StationComp({ station, setStations }) {
           className='cursor-pointer hover:bg-slate-300 border-solid border-2 text-center border-stone-400 rounded-lg w-full mb-2'
           type='submit'
           defaultValue='Update'
-          onClick={handleUpdate}
         />
       </form>
     </div>

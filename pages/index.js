@@ -51,7 +51,6 @@ export default function Home({ initialStations }) {
     return 0;
   });
   
-  useDataRefresh(fetchData);
 
   const getNonEmptyCellCount = () => {
     const nonEmptyCells = stations.filter((station) => station.owner.trim() !== '');
