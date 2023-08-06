@@ -73,6 +73,7 @@ export default function Home({ initialStations }) {
       <Head>
         <title>RF Integrations-Lab Mapping</title>
         <meta
+        charSet='UTF-8'
           name="description"
           content="This is a Next.js app for managing RF Integrations-Lab Mapping."
         />
