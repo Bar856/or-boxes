@@ -8,7 +8,7 @@ export default function StationComp({ station, setStations }) {
   const [setupOwner, setSetupOwner] = useState(owner);
   const [setupIp, setSetupIp] = useState(ip);
   const [setupLocation, setSetupLocation] = useState(location);
-  const [setupLpPort, setSetupLpPort] = useState(lpPort);
+  const [setupLpPort, setSetupLpPort] = useState(1);
   const [setupUser, setSetupUser] = useState(user);
   const clearFields = () => {
     const updatedStation = {
@@ -44,8 +44,9 @@ export default function StationComp({ station, setStations }) {
     setSetupOwner(station.owner);
     setSetupIp(station.ip);
     setSetupLocation(station.location);
-    setSetupLpPort(station.lpPort);
+    setSetupLpPort(lpPort !== '' ? parseInt(lpPort, 10) : 1); 
     setSetupUser(station.user);
+
   }, [station]);
 
   const handleUpdate = () => {
@@ -84,7 +85,7 @@ export default function StationComp({ station, setStations }) {
       </div>
       <form className=' grid-rows-5 gap-4 p-2'
       onSubmit={(e) => {
-        e.preventDefault(); // Prevent the default form submission
+        e.preventDefault();
         handleUpdate();
       }}
     >
@@ -104,11 +105,14 @@ export default function StationComp({ station, setStations }) {
         />
         <input
           className='hover:bg-slate-300 text-center border-solid border-2 border-stone-400 rounded-lg w-full mb-2'
-          placeholder='LP Port'
-          type='text'
+          type="range"
+          min={1}
+          max={4}
           value={setupLpPort}
-          onChange={(e) => setSetupLpPort(e.target.value)}
+          onChange={(e) => setSetupLpPort(parseInt(e.target.value, 10))}
+          step={1}
         />
+        <p className='center'>{setupLpPort}</p>
         <input
           className='hover:bg-slate-300 text-center border-solid border-2 border-stone-400 rounded-lg w-full mb-2'
           placeholder='IP'
