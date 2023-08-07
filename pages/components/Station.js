@@ -2,12 +2,14 @@ import Image from 'next/image';
 import { useState, useEffect } from 'react';
 
 export default function StationComp({ station, setStations }) {
-  const { id = '', name = '', owner = '', ip = '', location = '' } = station || {};
+  const { id = '', name = '', owner = '', ip = '', location = '' , lpPort = '', user = ''} = station || {};
 
   const [setupName, setSetupName] = useState(name);
   const [setupOwner, setSetupOwner] = useState(owner);
   const [setupIp, setSetupIp] = useState(ip);
   const [setupLocation, setSetupLocation] = useState(location);
+  const [setupLpPort, setSetupLpPort] = useState(1);
+  const [setupUser, setSetupUser] = useState(user);
   const clearFields = () => {
     const updatedStation = {
       ...station,
@@ -15,6 +17,8 @@ export default function StationComp({ station, setStations }) {
       owner: "",
       ip: setupIp,
       location: setupLocation,
+      lpPort: setupLpPort,
+      user: setupUser,
     };
     
     fetch('/api/updateStation', {
@@ -40,6 +44,9 @@ export default function StationComp({ station, setStations }) {
     setSetupOwner(station.owner);
     setSetupIp(station.ip);
     setSetupLocation(station.location);
+    setSetupLpPort(lpPort !== '' ? parseInt(lpPort, 10) : 1); 
+    setSetupUser(station.user);
+
   }, [station]);
 
   const handleUpdate = () => {
@@ -49,6 +56,8 @@ export default function StationComp({ station, setStations }) {
       owner: setupOwner,
       ip: setupIp,
       location: setupLocation,
+      lpPort: setupLpPort,
+      user: setupUser,
     };
     
     fetch('/api/updateStation', {
@@ -76,7 +85,7 @@ export default function StationComp({ station, setStations }) {
       </div>
       <form className=' grid-rows-5 gap-4 p-2'
       onSubmit={(e) => {
-        e.preventDefault(); // Prevent the default form submission
+        e.preventDefault();
         handleUpdate();
       }}
     >
@@ -87,7 +96,23 @@ export default function StationComp({ station, setStations }) {
           value={setupName}
           onChange={(e) => setSetupName(e.target.value)}
         />
-        
+        <input
+          className='hover:bg-slate-300 text-center border-solid border-2 border-stone-400 rounded-lg w-full mb-2'
+          placeholder='User'
+          type='text'
+          value={setupUser}
+          onChange={(e) => setSetupUser(e.target.value)}
+        />
+        <input
+          className='hover:bg-slate-300 text-center border-solid border-2 border-stone-400 rounded-lg w-full mb-2'
+          type="range"
+          min={1}
+          max={4}
+          value={setupLpPort}
+          onChange={(e) => setSetupLpPort(parseInt(e.target.value, 10))}
+          step={1}
+        />
+        <p className='center'>{setupLpPort}</p>
         <input
           className='hover:bg-slate-300 text-center border-solid border-2 border-stone-400 rounded-lg w-full mb-2'
           placeholder='IP'

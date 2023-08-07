@@ -4,7 +4,7 @@ const csv = require('fast-csv');
 
 export default async function handler(req, res) {
   if (req.method === 'POST') {
-    const { id, name, owner, ip, location } = req.body;
+    const { id, name, owner, ip, location, lpPort, user } = req.body;
 
     const filePath = path.join(process.cwd(), 'stations.csv');
 
@@ -32,7 +32,7 @@ export default async function handler(req, res) {
         return res.status(404).json({ error: 'Station not found' });
       }
 
-      lines[stationIndex] = [id, name, owner, ip, location].join(',');
+      lines[stationIndex] = [id, name, owner, ip, location, user, lpPort].join(',');
 
       const updatedData = lines.join('\n');
 
