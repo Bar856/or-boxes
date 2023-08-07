@@ -2,12 +2,14 @@ import Image from 'next/image';
 import { useState, useEffect } from 'react';
 
 export default function StationComp({ station, setStations }) {
-  const { id = '', name = '', owner = '', ip = '', location = '' } = station || {};
+  const { id = '', name = '', owner = '', ip = '', location = '' , lpPort = '', user = ''} = station || {};
 
   const [setupName, setSetupName] = useState(name);
   const [setupOwner, setSetupOwner] = useState(owner);
   const [setupIp, setSetupIp] = useState(ip);
   const [setupLocation, setSetupLocation] = useState(location);
+  const [setupLpPort, setSetupLpPort] = useState(lpPort);
+  const [setupUser, setSetupUser] = useState(user);
   const clearFields = () => {
     const updatedStation = {
       ...station,
@@ -15,6 +17,8 @@ export default function StationComp({ station, setStations }) {
       owner: "",
       ip: setupIp,
       location: setupLocation,
+      lpPort: setupLpPort,
+      user: setupUser,
     };
     
     fetch('/api/updateStation', {
@@ -40,6 +44,8 @@ export default function StationComp({ station, setStations }) {
     setSetupOwner(station.owner);
     setSetupIp(station.ip);
     setSetupLocation(station.location);
+    setSetupLpPort(station.lpPort);
+    setSetupUser(station.user);
   }, [station]);
 
   const handleUpdate = () => {
@@ -49,6 +55,8 @@ export default function StationComp({ station, setStations }) {
       owner: setupOwner,
       ip: setupIp,
       location: setupLocation,
+      lpPort: setupLpPort,
+      user: setupUser,
     };
     
     fetch('/api/updateStation', {
@@ -87,7 +95,20 @@ export default function StationComp({ station, setStations }) {
           value={setupName}
           onChange={(e) => setSetupName(e.target.value)}
         />
-        
+        <input
+          className='hover:bg-slate-300 text-center border-solid border-2 border-stone-400 rounded-lg w-full mb-2'
+          placeholder='User'
+          type='text'
+          value={setupUser}
+          onChange={(e) => setSetupUser(e.target.value)}
+        />
+        <input
+          className='hover:bg-slate-300 text-center border-solid border-2 border-stone-400 rounded-lg w-full mb-2'
+          placeholder='LP Port'
+          type='text'
+          value={setupLpPort}
+          onChange={(e) => setSetupLpPort(e.target.value)}
+        />
         <input
           className='hover:bg-slate-300 text-center border-solid border-2 border-stone-400 rounded-lg w-full mb-2'
           placeholder='IP'
