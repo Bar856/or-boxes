@@ -103,16 +103,18 @@ export default function StationComp({ station, setStations }) {
           value={setupUser}
           onChange={(e) => setSetupUser(e.target.value)}
         />
-        <input
-          className='hover:bg-slate-300 text-center border-solid border-2 border-stone-400 rounded-lg w-full mb-2'
-          type="range"
-          min={1}
-          max={4}
-          value={setupLpPort}
-          onChange={(e) => setSetupLpPort(parseInt(e.target.value, 10))}
-          step={1}
-        />
-        <p className='center'>{setupLpPort}</p>
+        <div className='flex items-center'>
+          <input
+            className='hover:bg-slate-300 rounded-lg w-full mb-2'
+            type="range"
+            min={1}
+            max={4}
+            value={setupLpPort}
+            onChange={(e) => setSetupLpPort(parseInt(e.target.value, 10))}
+            step={1}
+          />
+          <p className='ml-2 mb-2'>{setupLpPort}</p>
+        </div>
         <input
           className='hover:bg-slate-300 text-center border-solid border-2 border-stone-400 rounded-lg w-full mb-2'
           placeholder='IP'
