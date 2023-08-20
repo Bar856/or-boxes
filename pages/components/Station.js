@@ -2,14 +2,21 @@ import Image from 'next/image';
 import { useState, useEffect } from 'react';
 
 export default function StationComp({ station, setStations }) {
-  const { id = '', name = '', owner = '', ip = '', location = '' , lpPort = '', user = ''} = station || {};
+  const { id = '', name = '', owner = '', ip = '', location = '', user = ''  , port1 = '', port2 = '', port3 = '', port4 = ''} = station || {};
 
   const [setupName, setSetupName] = useState(name);
   const [setupOwner, setSetupOwner] = useState(owner);
   const [setupIp, setSetupIp] = useState(ip);
   const [setupLocation, setSetupLocation] = useState(location);
-  const [setupLpPort, setSetupLpPort] = useState(1);
   const [setupUser, setSetupUser] = useState(user);
+
+  const [setupPorts, setSetupPorts] = useState({
+    port1: port1 === 'true' ? true : false,
+    port2: port2 === 'true' ? true : false,
+    port3: port3 === 'true' ? true : false,
+    port4: port4 === 'true' ? true : false,
+  });
+
   const clearFields = () => {
     const updatedStation = {
       ...station,
@@ -17,8 +24,11 @@ export default function StationComp({ station, setStations }) {
       owner: "",
       ip: setupIp,
       location: setupLocation,
-      lpPort: setupLpPort,
       user: setupUser,
+      port1: setupPorts.port1,
+      port2: setupPorts.port2,
+      port3: setupPorts.port3,
+      port4: setupPorts.port4,
     };
     
     fetch('/api/updateStation', {
@@ -44,10 +54,14 @@ export default function StationComp({ station, setStations }) {
     setSetupOwner(station.owner);
     setSetupIp(station.ip);
     setSetupLocation(station.location);
-    setSetupLpPort(lpPort !== '' ? parseInt(lpPort, 10) : 1); 
     setSetupUser(station.user);
-
-  }, [station]);
+    setSetupPorts({
+      port1: station.port1 === 'true' ? true : false,
+      port2: station.port2 === 'true' ? true : false,
+      port3: station.port3 === 'true' ? true : false,
+      port4: station.port4 === 'true' ? true : false,
+    });
+}, [station]);
 
   const handleUpdate = () => {
     const updatedStation = {
@@ -56,10 +70,14 @@ export default function StationComp({ station, setStations }) {
       owner: setupOwner,
       ip: setupIp,
       location: setupLocation,
-      lpPort: setupLpPort,
       user: setupUser,
+      port1: setupPorts.port1,
+      port2: setupPorts.port2,
+      port3: setupPorts.port3,
+      port4: setupPorts.port4,
     };
     
+
     fetch('/api/updateStation', {
       method: 'POST',
       headers: {
@@ -81,7 +99,7 @@ export default function StationComp({ station, setStations }) {
   return (
     <div style={owner.length ? { backgroundColor: '#ff9999' } : { backgroundColor: '#80ff80' }} className='station move-station border-solid border-2 border-stone-400 rounded-lg'>
       <div className='center'>
-        <Image className='rounded-lg' width={200} height={200} src={"/box.png"} alt='box' />
+        <Image className='rounded-lg' width={200} height={200} src={"/1.png"} alt='box' />
       </div>
       <form className=' grid-rows-5 gap-4 p-2'
       onSubmit={(e) => {
@@ -103,16 +121,13 @@ export default function StationComp({ station, setStations }) {
           value={setupUser}
           onChange={(e) => setSetupUser(e.target.value)}
         />
-        <input
-          className='hover:bg-slate-300 text-center border-solid border-2 border-stone-400 rounded-lg w-full mb-2'
-          type="range"
-          min={1}
-          max={4}
-          value={setupLpPort}
-          onChange={(e) => setSetupLpPort(parseInt(e.target.value, 10))}
-          step={1}
-        />
-        <p className='center'>{setupLpPort}</p>
+        <p className='center mb-2'>port</p>
+        <div className='grid grid-cols-4'>
+          <input onChange={(e) => setSetupPorts({...setupPorts, port1: e.target.checked})} className='m-1' type='checkbox' name='1' checked={setupPorts.port1}/><label htmlFor="1">1</label>
+          <input onChange={(e) => setSetupPorts({...setupPorts, port2: e.target.checked})} className='m-1'  type='checkbox' checked={setupPorts.port2} name='2'/><label htmlFor="1">2</label>
+          <input onChange={(e) => setSetupPorts({...setupPorts, port3: e.target.checked})} className='m-1' type='checkbox' checked={setupPorts.port3} name='3'/><label htmlFor="1">3</label>
+          <input onChange={(e) => setSetupPorts({...setupPorts, port4: e.target.checked})} className='m-1' type='checkbox' checked={setupPorts.port4} name='4'/><label htmlFor="1">4</label>
+        </div>
         <input
           className='hover:bg-slate-300 text-center border-solid border-2 border-stone-400 rounded-lg w-full mb-2'
           placeholder='IP'
@@ -134,6 +149,7 @@ export default function StationComp({ station, setStations }) {
           value={setupOwner}
           onChange={(e) => setSetupOwner(e.target.value)}
         />  
+        
         <input
             className='cursor-pointer hover:bg-slate-100 border-solid border-2 text-center border-stone-400 rounded-lg w-full mb-2'
             type='button'
